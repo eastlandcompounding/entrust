@@ -42,6 +42,11 @@ class EntrustRole
 		}
 
 		if ($this->auth->guest() || !$request->user()->hasRole($roles)) {
+			
+			if ($request->ajax() || $request->wantsJson()) {
+                		return response('Unauthorized.', 401);
+            		}
+
 			abort(403);
 		}
 
