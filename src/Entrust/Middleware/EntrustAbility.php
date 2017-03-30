@@ -52,6 +52,11 @@ class EntrustAbility
 		}
 
 		if ($this->auth->guest() || !$request->user()->ability($roles, $permissions, [ 'validate_all' => $validateAll ])) {
+			
+			if ($request->ajax() || $request->wantsJson()) {
+                		return response('Unauthorized.', 401);
+			}
+
 			abort(403);
 		}
 
